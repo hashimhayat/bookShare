@@ -208,11 +208,11 @@ function foundBook(data){
 
 function getBookInfo(data){
   
-    document.getElementById("isbnout").value = data.isbn13;
-    document.getElementById("title").value = data.title;
-    document.getElementById("summary").value = data.summary;
-    document.getElementById("author").value = data.author;
-    document.getElementById("location").value = '382739827';
+    document.getElementById("isbnout1").value = data[0].isbn13;
+    document.getElementById("title1").value = data[0].title;
+    document.getElementById("summary1").value = data[0].summary;
+    document.getElementById("author1").value = data[0].author;
+    document.getElementById("location1").value = '382739827';
 }
 
 function usersignedup(data){
