@@ -34,6 +34,16 @@
   				</form>
   			<h2> <span>Insert the ISBN of your book and hit the search button.</span></h2>	
   			<button id="searchButton" onclick="searchBook();"> search </button>
+  			
+
+  			<form action="/newUser" method="post">
+  			  <h1> <br>  </h1>
+  			  <input type="text" name="isbnout" id="isbnout" placeholder="ISBN">
+  				<input type="text" name="title" id="title" placeholder="Title">
+  				<input type="text" name="summary" id="summary" placeholder="Summary">
+  				<input type="text" name="author" id="author" placeholder="Author">
+  			</form>
+
 			</header>
 		</div>
 </div>
@@ -147,9 +157,8 @@
 							
 							<p>Click on this button to see the content being pushed away in 3D to reveal a navigation or other items.</p>
 					 	</div>
-						<div class="column">
-						  
-						</div>
+					 	
+
 						<div class="related">
 							<p>If you enjoyed this demo you might also like:</p>
 							<p><a href="http://tympanus.net/Tutorials/AnimatedBorderMenus/">Animated Border Menus</a></p>

@@ -4,7 +4,7 @@ var screenH = window.innerHeight;   // Screen Height
 var theCanvas, pages;
 //html elements
 var signup, login, showMenus, homeScreen, sharebook,backButton, accountdiv,backButtonAccount,isbnBox,searchButton;
-var isbn, book_info, bookSearched;
+var isbn, book_info, bookSearched,title;
 
 function setup() {
   htmlElements();
@@ -30,6 +30,7 @@ function draw() {
 
 function htmlElements(){
   
+  title = select('#title');
   searchButton = select('#searchButton');
   isbnBox = select('#isbn')
   accountdiv = select('#account');
@@ -111,11 +112,16 @@ function Pages(){
     isbn = isbnBox.value();
     
     if (bookSearched){
-        var url = 'http://isbndb.com/api/v2/json/0D2YAWB1/book/9781111578350';
+        var url = 'http://jsonplaceholder.typicode.com/posts/1';
         loadJSON(url,parseJSON);
-        console.log(loadJSON(url));
         bookSearched = false;
     }
+    
+    document.getElementById("isbnout").value = '384789324798324';
+    document.getElementById("title").value = 'Harry Potter'
+    document.getElementById("summary").value = 'Best Seller!';
+    document.getElementById("author").value = 'JK Rowling';
+    
   }
 }
 

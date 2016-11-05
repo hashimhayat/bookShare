@@ -14,7 +14,7 @@ html, body, .perspective1 {
 	height: 100%;
 }
 
-#isbn,select {
+#isbn,#isbnout,#title,#summary,#author,select {
   width: 50%;
   padding: 12px 20px;
   margin: 8px 0;
