@@ -55,9 +55,10 @@
 				<h1> <span>Find your favorite book.</span></h1>	
   				<form action="/newUser" method="post">
   				  <input type="text" name="isbn" id="isbn" placeholder="Search by ISBN">
+  				  <input type="text" name="booktitle" id="booktitle" placeholder="Search by Title">
   				</form>
-      			<h2> <span>Insert the ISBN of your book and hit the search button.</span></h2>	
-      			<button id="searchButton" onclick="searchBook();"> search </button>
+      			<h2> <span>Insert the ISBN/Title of your book and hit the search button.</span></h2>	
+      			<button id="searchButton" onclick="searchBookinDB();"> search </button>
     			<form action="/newUser" method="post">
     			  <br>
     			  <input type="text" name="isbnout" id="isbnout" placeholder="ISBN">

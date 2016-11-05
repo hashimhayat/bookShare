@@ -4,13 +4,13 @@ var screenH = window.innerHeight;
 var theCanvas, pages;
 //html elements
 var signup, login, showMenus, homeScreen, sharebook, requestBook,backButton, accountdiv;
-var backButtonAccount, isbnBox,searchButton,ISBN_searched;
+var backButtonAccount, isbnBox,searchButton,ISBN_searched,bookT;
 var isbn, book_info, bookSearched,title, backButtonrb, loginPressed, loginButton,signupPressed;
 
 function setup() {
   htmlElements();
   ISBN_searched = false;
-  bookSearched = false;
+  searchedFind = false;
   loginButton = false;
   signupPressed = false;
   theCanvas = createCanvas(screenW,screenH);
@@ -40,6 +40,7 @@ function htmlElements(){
   title = select('#title');
   searchButton = select('#searchButton');
   isbnBox = select('#isbn')
+  bookTitle = select('#booktitle');
   accountdiv = select('#account');
   backButton = select('#backButton');
   backButtonrb = select('#backButtonrb');
@@ -111,22 +112,17 @@ function Pages(){
     var fname = select("#firstname").value();
     var lname = select("#lastname").value();
     var mail = select("#email").value();
-    var pass = select("#passwordSU").value();
+    var passw = select("#passwordSU").value();
     var zipcode = select("#zipcode").value();
 
     
     if (signupPressed){
-      console.log(fname);
-      console.log(lname);
-      console.log(mail);
-      console.log(pass);
-      console.log(zipcode);
-      
-      getUsers(fname,lname,mail,pass,zipcode);
+      getUsers(fname,lname,mail,passw,zipcode);
       signupPressed = false;
     }
     
     if (loginPressed){
+      console.log(pass);
       userLogin(user,pass);
       loginPressed = false;
     }
@@ -141,6 +137,7 @@ function Pages(){
     
     isbn = isbnBox.value();
     
+    
     if (ISBN_searched){
       getBookFromISBN(isbn);
       ISBN_searched = false;
@@ -154,9 +151,13 @@ function Pages(){
     backButtonrb.style('display', 'inline-block');
     backButtonrb.position(screenW-100,10);
     
+    bookT = bookTitle.value();
+    isbn = isbnBox.value();
     
-
-    
+    if (searchedFind){
+      getBookFound(bookT,isbn);
+      searchedFind = false;
+    }
   }
 }
 
@@ -165,7 +166,7 @@ function Pages(){
 function getUsers(fname,lname,mail,pass,zip){
   var param = {firstname: fname,lastname:lname, email:mail, zipcode:zip, password: pass};
   var path = 'http://148.84.200.116:4567/newUser';
-  httpPost(path,param,displayUser);
+  httpPost(path,param,usersignedup);
 }
 
 function userLogin(user,pass){
@@ -185,17 +186,37 @@ function getBookFromISBN(isbn){
   httpGet(path,'json',getBookInfo);  
 }
 
+function getBookFound(b,is){
+  var curr;
+  if (is.length == 0){
+    curr = b;
+  } else {
+    curr = is;
+  }
+  var param = {search:curr};
+  var path = 'http://148.84.200.116:4567/searchByTitle';
+  httpPost(path,param,foundBook);
+}
+
+function foundBook(data){
+    document.getElementById("isbnout").value = data.isbn13;
+    document.getElementById("title").value = data.title;
+    document.getElementById("summary").value = data.summary;
+    document.getElementById("author").value = data.author;
+    document.getElementById("location").value = '382739827';
+}
+
 function getBookInfo(data){
   
     document.getElementById("isbnout").value = data.isbn13;
     document.getElementById("title").value = data.title;
     document.getElementById("summary").value = data.summary;
-    document.getElementById("author").value = 'JK Rowling';
+    document.getElementById("author").value = data.author;
     document.getElementById("location").value = '382739827';
 }
 
-function displayUser(data){
-  console.log(data);
+function usersignedup(data){
+    gotoPage(1);
 }
 
 function loginButtonPressed(){
@@ -211,7 +232,12 @@ function bookAtLocation(data){
 }
 
 function validateLogin(data){
-  console.log(data);
+  if (data[0] == 0){
+    gotoPage(1);
+  } else if (data[0] == 1){
+    // Fail
+  }
+
 }
 
 function parseJSON(val){
@@ -220,6 +246,10 @@ function parseJSON(val){
 
 function searchBook(){
   ISBN_searched = true;
+}
+
+function searchBookinDB(){
+  searchedFind = true;
 }
 
 function submitBook(){
