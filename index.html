@@ -23,6 +23,21 @@
     <style> body {padding: 0; margin: 0;} canvas {vertical-align: top;} </style>
   </head>
   
+<div id="points" class="perspective1 effect-moveleft">
+    <div class="container">
+      <button id="backButtonpoints" onclick="gotoPage(1);"> back </button>
+			<header class="codrops-header">
+			  <h1>Points Earned</h1>
+				<h2><span>Redeem your points.</span></h2>
+				<br><br>
+      			<h1 id = 'mypoint'>Points<h1>
+ 
+    			</form>
+      
+			</header>
+		</div>
+</div>
+  
 <div id="share_book" class="perspective1 effect-moveleft">
     <div class="container">
       <button id="backButton" onclick="gotoPage(1);"> back </button>
@@ -166,15 +181,22 @@
 				<button id="showMenu"> Menu </button>
 					<header class="codrops-header">
 					  <h1>ShareYourBook</h1>
-						<h1> <span>Transforms the page in 3D to reveal a menu</span></h1>	
+						<h1> <span>Share your books with those who need them.</span></h1>	
 					</header>
 					<div class="main clearfix">
 						<div class="column">
-							<p>Click on this button to see the content being pushed away in 3D to reveal a navigation or other items.</p>
+							<p>"If you only read the books that everyone else is reading, you can only think what everyone else is thinking."</p>
 					 	</div>
 
 					 	<div class="column">
-					 	  <p>hello world</p>
+					 	 <p>Available to be shared:</p>
+      			 <li><p1>The Whistler by John Grisham</p1><br>
+      			  <li><p1>Sex, Lies, and Serious Money… by Stuart Woods</p1><br>
+      			  <li><p1>Small Great Things by Jodi Picoult</p1><br>
+      			  <li><p1>The Girl on the Train by Paula Hawkins</p1><br>
+      			  <li><p1>The Blood Mirror by Brent Weeks</p1><br>
+      			  <li><p1>Harry Potter</p1><br>
+
 					 	</div>
 
 						<div class="related">
@@ -190,7 +212,7 @@
 				<a href="javascript:gotoPage(4);" class="icon-news">Find a Book</a>
 				<!--<a href="#" class="icon-image">Images</a>-->
 				<a href="javascript:gotoPage(5);" class="icon-upload">Share a Book</a>
-				<a href="javascript:gotoPage(6);" class="icon-star">Favorites Books</a>
+				<a href="javascript:gotoPage(2);" class="icon-star">Points</a>
 				<!--<a href="#" class="icon-mail">Messages</a>-->
 				<a href="javascript:gotoPage(3);" class="icon-lock">Account</a>
 			</nav>

@@ -4,7 +4,7 @@ var screenH = window.innerHeight;
 var theCanvas, pages;
 //html elements
 var signup, login, showMenus, homeScreen, sharebook, requestBook,backButton, accountdiv;
-var backButtonAccount, isbnBox,searchButton,ISBN_searched,bookT;
+var backButtonAccount, isbnBox,searchButton,ISBN_searched,bookT, points,buttonPoints, userPoints;
 var isbn, book_info, bookSearched,title, backButtonrb, loginPressed, loginButton,signupPressed;
 
 function setup() {
@@ -32,10 +32,16 @@ function draw() {
   
   else if (pages.request_book)
     pages.displayFindBook();
+    
+  else if (pages.points)
+    pages.displayPoints();
+  
 }
 
 function htmlElements(){
   
+  buttonPoints = select('#backButtonpoints');
+  points = select('#points');
   requestBook = select('#request_book');
   title = select('#title');
   searchButton = select('#searchButton');
@@ -49,6 +55,7 @@ function htmlElements(){
   homeScreen = select("#perspective1");
   signup = select("#form");
   showMenu = select('#showMenu');
+  buttonPoints.style('display', 'none');
   backButtonrb.style('display', 'none');
   searchButton.style('display', 'none');
   accountdiv.style('display', 'none');
@@ -72,7 +79,7 @@ function gotoPage(pg){
   if (pg == 1)
     pages.home = true;
   else if (pg == 2)
-    pages.signup = true;
+    pages.points = true;
   else if (pg == 3)
     pages.account = true;
   else if (pg == 4)
@@ -87,6 +94,7 @@ function Pages(){
   this.account = false;
   this.submit_book = false;
   this.request_book = false;
+  this.points = false
   
   this.signUpwid = signup.width;
   
@@ -158,14 +166,28 @@ function Pages(){
       searchedFind = false;
     }
   }
+  
+  this.displayPoints = function(){
+    hideElements();
+    points.style('display', 'inline-block');
+    buttonPoints.style('display', 'inline-block');
+    buttonPoints.position(screenW-100,10);
+    document.getElementById("mypoint").innerHTML = "100";
+  }
+  
 }
 
 // Accessor Methods
 
+function getCurrentUserInfo(){
+  var path = 'http://148.84.200.116:4567/getUserData';
+  httpPost(path,getUserPoints);
+}
+
 function getUsers(fname,lname,mail,pass,zip){
   var param = {firstname: fname,lastname:lname, email:mail, zipcode:zip, password: pass};
   var path = 'http://148.84.200.116:4567/newUser';
-  httpPost(path,param,usersignedup);
+  httpGet(path,param,usersignedup);
 }
 
 function userLogin(user,pass){
@@ -189,6 +211,11 @@ function getBookFound(b){
   var param = {search:b};
   var path = 'http://148.84.200.116:4567/searchByTitle';
   httpPost(path,param,foundBook);
+}
+
+function getUserPoints(data){
+  data = JSON.parse(data);
+  userPoints = data;
 }
 
 function getBookInfo(data){
@@ -250,6 +277,7 @@ function submitBook(){
 }
 
 function hideElements(){
+  points.style('display', 'none');
   requestBook.style('display', 'none');
   accountdiv.style('display', 'none');
   homeScreen.style('display', 'none');
