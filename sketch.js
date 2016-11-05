@@ -152,10 +152,9 @@ function Pages(){
     backButtonrb.position(screenW-100,10);
     
     bookT = bookTitle.value();
-    isbn = isbnBox.value();
     
     if (searchedFind){
-      getBookFound(bookT,isbn);
+      getBookFound(bookT);
       searchedFind = false;
     }
   }
@@ -186,14 +185,8 @@ function getBookFromISBN(isbn){
   httpGet(path,'json',getBookInfo);  
 }
 
-function getBookFound(b,is){
-  var curr;
-  if (is.length == 0){
-    curr = b;
-  } else {
-    curr = is;
-  }
-  var param = {search:curr};
+function getBookFound(b){
+  var param = {search:b};
   var path = 'http://148.84.200.116:4567/searchByTitle';
   httpPost(path,param,foundBook);
 }
