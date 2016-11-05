@@ -3,7 +3,7 @@ var screenH = window.innerHeight;   // Screen Height
 
 var theCanvas, pages;
 //html elements
-var signup, login;
+var signup, login, showMenus, homeScreen;
 
 function setup() {
   htmlElements();
@@ -16,21 +16,22 @@ function draw() {
   text('ShareBooks',20,20);
   
   if (pages.home){
-    pages.displayHome();
+    pages.displayMain();
   } 
   
-  else if (pages.signup){
-    pages.displaySign();
+  else if (pages.account){
+    pages.displayAccount();
   }
   
 }
 
 function htmlElements(){
-  
+  homeScreen = select("#perspective1");
   signup = select("#form");
   signup.style('display', 'none');
   login = select("#login");
   login.style('display', 'none');
+  showMenu = select('#showMenu');
 }
 
 function updateWidth(elem){
@@ -40,18 +41,43 @@ function updateWidth(elem){
       pages.signUpwid = signup.width;
 }
 
+function gotoPage(pg){
+  
+  // Set all pages to false
+  pages.home = false; pages.signup = false; pages.request_book = false; 
+  pages.login = false; pages.submit_book = false; 
+  
+  // Set the page to display to true
+  if (pg == 1)
+    pages.home = true;
+  else if (pg == 2)
+    pages.signup = true;
+  else if (pg == 3)
+    pages.account = true;
+  else if (pg == 4)
+    pages.request_book = true;
+  else if (pg == 5)
+    pages.submit_book = true;
+}
+
 function Pages(){
-  this.home = false;
-  this.signup = true;
-  this.login = false;
+  this.home = true;
+  this.account = false;
   this.submit_book = false;
   this.request_book = false;
+  
   this.signUpwid = signup.width;
   
-  this.displaySign = function(){
+  this.displayMain = function(){
     
     signup.style('display', 'inline-block');
-    signup.position(screenW/2-this.signUpwid/2,120);
+    showMenu.position(screenW-100,10);
+    
+  }
+  
+  this.displayHome = function(){
+    
+    homeScreen.style('display', 'none');
     
     background("#262228");
     fill("#FFCE00");
@@ -65,60 +91,22 @@ function Pages(){
     text(phrase,screenW/2-textWidth(phrase)/2,130);
   }
   
-  this.displayHome = function(){
+  this.displayAccount = function(){
+    
+    background(240);
+    
+    textSize(50);
+    textFont("Helvetica");
+    var phrase = "Account Settings";
+    text(phrase,screenW/2-textWidth(phrase)/2,90);
+    
+    // homeScreen.style('display', 'none');
+    signup.style('display', 'inline-block');
+    signup.position(screenW-100,10);
     
   }
   
-  this.templateScreen = function(){
-    
-    //canvas.position(0,70);
-    
-    nextButton.style('display', 'none');
-    template.style('display', 'inline-block');
-    template.position(screenW/2-400, 280);
-    
-    background("#262228");
-    fill(255, 204, 0);
-    textSize(50);
-    var phrase = "Choose a template";
-    text(phrase,screenW/2-textWidth(phrase)/2,90);
-    textSize(20);
-    var phrase = "Create a resume using one of out templates.";
-    text(phrase,screenW/2-textWidth(phrase)/2,130);
-  }
-  
-  this.loginScreen = function(){
-    
-    //canvas.position(0,70);
-    
-    template.style('display', 'none');
-    firstName.style('display', 'inline-block');
-    lastName.style('display', 'inline-block');
-    add.style('display', 'inline-block');
-    firstName.position(screenW/2-400+155, 230);
-    lastName.position(screenW/2-140+155, 230);
-    add.position(screenW/2-245, 300);
-    
-    fname = select('#fname').value();
-    lname = select('#lname').value();
-    address = select('#address').value();
-     
-    fullname = fname + " " + lname;
-    
-    if (fullname != ' '){
-      nextButton.style('display', 'inline-block');
-      nextButton.position(screenW/2-55, 380);
-    }
-    
-    background("#262228");
-    fill(255, 204, 0);
-    textSize(50);
-    var phrase = "What is your name?";
-    text(phrase,screenW/2-textWidth(phrase)/2,90);
-    textSize(20);
-    var phrase = "Let's start building your resume.";
-    text(phrase,screenW/2-textWidth(phrase)/2,130);
-  }
+
 }
 
 // Updates the Screen Size
