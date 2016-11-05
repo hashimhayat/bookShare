@@ -4,11 +4,12 @@ var screenH = window.innerHeight;   // Screen Height
 var theCanvas, pages;
 //html elements
 var signup, login, showMenus, homeScreen, sharebook, requestBook,backButton, accountdiv, backButtonAccount, isbnBox,searchButton;
-var isbn, book_info, bookSearched,title, backButtonrb;
+var isbn, book_info, bookSearched,title, backButtonrb, loginPressed, loginButton;
 
 function setup() {
   htmlElements();
-  bookSearched = false
+  bookSearched = false;
+  loginButton = false;
   theCanvas = createCanvas(screenW,screenH);
   pages = new Pages();
 }
@@ -31,7 +32,6 @@ function draw() {
 }
 
 function htmlElements(){
-  
   
   requestBook = select('#request_book');
   title = select('#title');
@@ -101,7 +101,14 @@ function Pages(){
     signup.style('display', 'inline-block');
     signup.position(screenW/2-this.signUpwid/2,120);
     backButtonAccount.position(screenW-100,10);
-
+    
+    var user = select("#username").value();
+    var pass = select("#password").value();
+    
+    if (loginPressed){
+      userLogin(user,pass);
+      loginPressed = false;
+    }
   }
   
   this.displaySubmitBook = function(){
@@ -146,10 +153,14 @@ function displayUser(data){
   console.log(data);
 }
 
-function userLogin(username,password){
-  var param = 'username='+ username +'password='+password
+function loginButtonPressed(){
+  loginPressed = true;
+}
+
+function userLogin(user,pass){
+  var param = { email: user ,password:pass};
   var path = 'http://148.84.200.116:4567/login';
-  httpPost(path,param,"json",displayUser)
+  httpPost(path,param,validateLogin)
 }
 
 function validateLogin(data){
