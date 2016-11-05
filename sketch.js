@@ -198,7 +198,7 @@ function getBookFound(b,is){
   httpPost(path,param,foundBook);
 }
 
-function foundBook(data){
+function getBookInfo(data){
     document.getElementById("isbnout").value = data.isbn13;
     document.getElementById("title").value = data.title;
     document.getElementById("summary").value = data.summary;
@@ -206,7 +206,7 @@ function foundBook(data){
     document.getElementById("location").value = '382739827';
 }
 
-function getBookInfo(data){
+function foundBook(data){
     console.log(data);
     document.getElementById("isbnout1").value = data[0].isbn;
     document.getElementById("title1").value = data[0].title;
