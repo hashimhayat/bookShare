@@ -4,12 +4,13 @@ var screenH = window.innerHeight;   // Screen Height
 var theCanvas, pages;
 //html elements
 var signup, login, showMenus, homeScreen, sharebook, requestBook,backButton, accountdiv, backButtonAccount, isbnBox,searchButton;
-var isbn, book_info, bookSearched,title, backButtonrb, loginPressed, loginButton;
+var isbn, book_info, bookSearched,title, backButtonrb, loginPressed, loginButton,signupPressed;
 
 function setup() {
   htmlElements();
   bookSearched = false;
   loginButton = false;
+  signupPressed = false;
   theCanvas = createCanvas(screenW,screenH);
   pages = new Pages();
 }
@@ -105,6 +106,18 @@ function Pages(){
     var user = select("#username").value();
     var pass = select("#password").value();
     
+    var fname = select("#firstname").value();
+    var lname = select("#lastname").value();
+    var mail = select("#email").value();
+    var pass = select("#passwordSU").value();
+    var zipcode = select("#zipcode").value();
+
+    
+    if (signupPressed){
+      getUsers(fname,lname,mail,pass,zipcode);
+      signupPressed = false;
+    }
+    
     if (loginPressed){
       userLogin(user,pass);
       loginPressed = false;
@@ -144,9 +157,10 @@ function Pages(){
 
 // Accessor Methods
 
-function getUsers(){
+function getUsers(fname,lname,mail,pass,zip){
+  var param = {firstname: fname,lastname:lname, email:mail, zipcode:zip, password: pass};
   var path = 'http://148.84.200.116:4567/getUsers';
-  httpPost(path,"json",displayUser)
+  httpPost(path,param,displayUser);
 }
 
 function displayUser(data){
@@ -157,10 +171,14 @@ function loginButtonPressed(){
   loginPressed = true;
 }
 
+function signUpButtonPressed(){
+  signupPressed = true;
+}
+
 function userLogin(user,pass){
   var param = { email: user ,password:pass};
   var path = 'http://148.84.200.116:4567/login';
-  httpPost(path,param,validateLogin)
+  httpPost(path,param,validateLogin);
 }
 
 function validateLogin(data){
