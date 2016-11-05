@@ -200,7 +200,7 @@ function getBookInfo(data){
 }
 
 function foundBook(data){
-    console.log(data);
+    console.log(data[0]);
     document.getElementById("isbnout1").value = data[0].isbn;
     document.getElementById("title1").value = data[0].title;
     document.getElementById("summary1").value = data[0].summary;
