@@ -200,11 +200,11 @@ function getBookInfo(data){
 }
 
 function foundBook(data){
-    console.log(data[0]);
-    document.getElementById("isbnout1").value = data[0].isbn;
-    document.getElementById("title1").value = data[0].title;
-    document.getElementById("summary1").value = data[0].summary;
-    document.getElementById("author1").value = data[0].author;
+    console.log(data.isbn);
+    document.getElementById("isbnout1").value = data.isbn;
+    document.getElementById("title1").value = data.title;
+    document.getElementById("summary1").value = data.summary;
+    document.getElementById("author1").value = data.author;
     document.getElementById("location1").value = '382739827';
 }
 
