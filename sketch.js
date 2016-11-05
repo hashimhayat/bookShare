@@ -146,11 +146,6 @@ function Pages(){
       ISBN_searched = false;
     }
     
-    document.getElementById("isbnout").value = '384789324798324';
-    document.getElementById("title").value = 'Harry Potter'
-    document.getElementById("summary").value = 'Best Seller!';
-    document.getElementById("author").value = 'JK Rowling';
-    document.getElementById("location").value = '382739827';
   }
   
   this.displayFindBook = function(){
@@ -192,7 +187,11 @@ function getBookFromISBN(isbn){
 
 function getBookInfo(data){
   
-  console.log(data);
+    document.getElementById("isbnout").value = data.isbn13;
+    document.getElementById("title").value = data.title;
+    document.getElementById("summary").value = data.summary;
+    document.getElementById("author").value = 'JK Rowling';
+    document.getElementById("location").value = '382739827';
 }
 
 function displayUser(data){
