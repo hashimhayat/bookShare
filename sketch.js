@@ -201,10 +201,10 @@ function getBookInfo(data){
 
 function foundBook(data){
     console.log(data);
-    document.getElementById("isbnout1").value = 'data.isbn;';
-    document.getElementById("title1").value = 'data.title;';
-    document.getElementById("summary1").value = 'data.summary;';
-    document.getElementById("author1").value = 'data.author;';
+    document.getElementById("isbnout1").value = data.isbn;
+    document.getElementById("title1").value = data.title;
+    document.getElementById("summary1").value = data.summary;
+    document.getElementById("author1").value = data.author;
     document.getElementById("location1").value = '382739827';
 }
 
