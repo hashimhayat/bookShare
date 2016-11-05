@@ -3,10 +3,12 @@ var screenH = window.innerHeight;   // Screen Height
 
 var theCanvas, pages;
 //html elements
-var signup, login, showMenus, homeScreen, sharebook,backButton, accountdiv,backButtonAccount;
+var signup, login, showMenus, homeScreen, sharebook,backButton, accountdiv,backButtonAccount,isbnBox,searchButton;
+var isbn, book_info, bookSearched;
 
 function setup() {
   htmlElements();
+  bookSearched = false
   theCanvas = createCanvas(screenW,screenH);
   pages = new Pages();
 }
@@ -27,16 +29,17 @@ function draw() {
 }
 
 function htmlElements(){
+  
+  searchButton = select('#searchButton');
+  isbnBox = select('#isbn')
   accountdiv = select('#account');
   backButton = select('#backButton');
   backButtonAccount = select('#backButtonac');
   sharebook = select("#share_book");
   homeScreen = select("#perspective1");
   signup = select("#form");
-  login = select("#login");
-  signup.style('display', 'none');
+  searchButton.style('display', 'none');
   accountdiv.style('display', 'none');
-  login.style('display', 'none');
   showMenu = select('#showMenu');
 }
 
@@ -49,9 +52,7 @@ function updateWidth(elem){
 
 function gotoPage(pg){
   
-  console.log(pg)
-
-  
+  console.log(pg);
   // Set all pages to false
   pages.home = false; pages.request_book = false; 
   pages.account = false; pages.submit_book = false; 
@@ -81,9 +82,7 @@ function Pages(){
   
   this.displayMain = function(){
     
-    background(255);
-    accountdiv.style('display', 'none');
-    sharebook.style('display', 'none');
+    hideElements();
     homeScreen.style('display', 'inline-block');
     showMenu.position(screenW-100,10);
   }
@@ -94,25 +93,48 @@ function Pages(){
   
   this.displayAccount = function(){
     
-    homeScreen.style('display', 'none');
+    hideElements();
     accountdiv.style('display', 'inline-block');
     signup.style('display', 'inline-block');
-    signup.position(screenW/2-this.signUpwid/2,150);
+    signup.position(screenW/2-this.signUpwid/2,120);
     backButtonAccount.position(screenW-100,10);
 
   }
   
   this.displaySubmitBook = function(){
     
-    accountdiv.style('display', 'none');
-    homeScreen.style('display', 'none');
+    hideElements();
     sharebook.style('display', 'inline-block');
+    searchButton.style('display', 'inline-block');
     backButton.position(screenW-100,10);
     
+    isbn = isbnBox.value();
     
+    if (bookSearched){
+        var url = 'http://isbndb.com/api/v2/json/0D2YAWB1/book/9781111578350';
+        loadJSON(url,parseJSON);
+        console.log(loadJSON(url));
+        bookSearched = false;
+    }
   }
-  
+}
 
+function parseJSON(val){
+  console.log(val);
+}
+
+setTimeout(parseJSON, 5000);
+
+function searchBook(){
+  bookSearched = true;
+}
+
+function hideElements(){
+  
+  accountdiv.style('display', 'none');
+  homeScreen.style('display', 'none');
+  accountdiv.style('display', 'none');
+  sharebook.style('display', 'none');
 }
 
 // Updates the Screen Size
