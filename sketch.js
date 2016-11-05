@@ -96,6 +96,7 @@ function Pages(){
     
     homeScreen.style('display', 'none');
     accountdiv.style('display', 'inline-block');
+    signup.style('display', 'inline-block');
     signup.position(screenW/2-this.signUpwid/2,150);
     backButtonAccount.position(screenW-100,10);
 
