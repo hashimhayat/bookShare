@@ -3,8 +3,8 @@ var screenH = window.innerHeight;   // Screen Height
 
 var theCanvas, pages;
 //html elements
-var signup, login, showMenus, homeScreen, sharebook,backButton, accountdiv,backButtonAccount,isbnBox,searchButton;
-var isbn, book_info, bookSearched,title;
+var signup, login, showMenus, homeScreen, sharebook, requestBook,backButton, accountdiv, backButtonAccount, isbnBox,searchButton;
+var isbn, book_info, bookSearched,title, backButtonrb;
 
 function setup() {
   htmlElements();
@@ -16,7 +16,7 @@ function setup() {
 function draw() {
   
   if (pages.home){
-    pages.displayMain();
+    pages.displayHome();
   } 
   
   else if (pages.account){
@@ -26,22 +26,29 @@ function draw() {
   else if (pages.submit_book)
     pages.displaySubmitBook();
   
+  else if (pages.request_book)
+    pages.displayFindBook();
 }
 
 function htmlElements(){
   
+  
+  requestBook = select('#request_book');
   title = select('#title');
   searchButton = select('#searchButton');
   isbnBox = select('#isbn')
   accountdiv = select('#account');
   backButton = select('#backButton');
+  backButtonrb = select('#backButtonrb');
   backButtonAccount = select('#backButtonac');
   sharebook = select("#share_book");
   homeScreen = select("#perspective1");
   signup = select("#form");
+  showMenu = select('#showMenu');
+  backButtonrb.style('display', 'none');
   searchButton.style('display', 'none');
   accountdiv.style('display', 'none');
-  showMenu = select('#showMenu');
+ 
 }
 
 function updateWidth(elem){
@@ -53,7 +60,6 @@ function updateWidth(elem){
 
 function gotoPage(pg){
   
-  console.log(pg);
   // Set all pages to false
   pages.home = false; pages.request_book = false; 
   pages.account = false; pages.submit_book = false; 
@@ -70,7 +76,6 @@ function gotoPage(pg){
   else if (pg == 5)
     pages.submit_book = true;
   
-  console.log(pages.account);
 }
 
 function Pages(){
@@ -81,16 +86,13 @@ function Pages(){
   
   this.signUpwid = signup.width;
   
-  this.displayMain = function(){
+  this.displayHome = function(){
     
     hideElements();
     homeScreen.style('display', 'inline-block');
     showMenu.position(screenW-100,10);
   }
-  
-  this.displayHome = function(){
-    
-  }
+
   
   this.displayAccount = function(){
     
@@ -121,8 +123,25 @@ function Pages(){
     document.getElementById("title").value = 'Harry Potter'
     document.getElementById("summary").value = 'Best Seller!';
     document.getElementById("author").value = 'JK Rowling';
-    
+    document.getElementById("location").value = '382739827';
   }
+  
+  this.displayFindBook = function(){
+    hideElements();
+    requestBook.style('display', 'inline-block');
+    backButtonrb.style('display', 'inline-block');
+    backButtonrb.position(screenW-100,10);
+    getUsers();
+  }
+}
+
+function getUsers(){
+  var path = 'http://148.84.200.116:4567/getUsers';
+  httpGet(path,"json",displayUser)
+}
+
+function displayUser(data){
+  console.log(data);
 }
 
 function parseJSON(val){
@@ -135,8 +154,13 @@ function searchBook(){
   bookSearched = true;
 }
 
+function submitBook(){
+  
+}
+
 function hideElements(){
   
+  requestBook.style('display', 'none');
   accountdiv.style('display', 'none');
   homeScreen.style('display', 'none');
   accountdiv.style('display', 'none');
