@@ -135,12 +135,24 @@ function Pages(){
   }
 }
 
+// Accessor Methods
+
 function getUsers(){
   var path = 'http://148.84.200.116:4567/getUsers';
-  httpGet(path,"json",displayUser)
+  httpPost(path,"json",displayUser)
 }
 
 function displayUser(data){
+  console.log(data);
+}
+
+function userLogin(username,password){
+  var param = 'username='+ username +'password='+password
+  var path = 'http://148.84.200.116:4567/login';
+  httpPost(path,param,"json",displayUser)
+}
+
+function validateLogin(data){
   console.log(data);
 }
 
