@@ -141,10 +141,9 @@ function Pages(){
     
     isbn = isbnBox.value();
     
-    if (bookSearched){
-        var url = 'http://jsonplaceholder.typicode.com/posts/1';
-        loadJSON(url,parseJSON);
-        bookSearched = false;
+    if (ISBN_searched){
+      getBookFromISBN(isbn);
+      ISBN_searched = false;
     }
     
     document.getElementById("isbnout").value = '384789324798324';
@@ -160,12 +159,8 @@ function Pages(){
     backButtonrb.style('display', 'inline-block');
     backButtonrb.position(screenW-100,10);
     
-    if (ISBN_searched){
-      getBookFromISBN(isbn);
-      ISBN_searched = false;
-    }
     
-    
+
     
   }
 }
