@@ -25,6 +25,17 @@ html, body, .perspective1 {
   color: black;
 }
 
+#isbn,#isbnout1,#title1,#summary1,#author1,#location1,#booktitle,select {
+  width: 50%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: black;
+}
+
 .perspective1 {
 	background: #aaa;
 	position: relative;
