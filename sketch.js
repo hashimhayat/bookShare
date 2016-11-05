@@ -207,8 +207,8 @@ function foundBook(data){
 }
 
 function getBookInfo(data){
-  
-    document.getElementById("isbnout1").value = data[0].isbn13;
+    console.log(data);
+    document.getElementById("isbnout1").value = data[0].isbn;
     document.getElementById("title1").value = data[0].title;
     document.getElementById("summary1").value = data[0].summary;
     document.getElementById("author1").value = data[0].author;
