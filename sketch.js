@@ -1,13 +1,15 @@
-var screenW = window.innerWidth;    // Screen Width
-var screenH = window.innerHeight;   // Screen Height
+var screenW = window.innerWidth;   
+var screenH = window.innerHeight;   
 
 var theCanvas, pages;
 //html elements
-var signup, login, showMenus, homeScreen, sharebook, requestBook,backButton, accountdiv, backButtonAccount, isbnBox,searchButton;
+var signup, login, showMenus, homeScreen, sharebook, requestBook,backButton, accountdiv;
+var backButtonAccount, isbnBox,searchButton,ISBN_searched;
 var isbn, book_info, bookSearched,title, backButtonrb, loginPressed, loginButton,signupPressed;
 
 function setup() {
   htmlElements();
+  ISBN_searched = false;
   bookSearched = false;
   loginButton = false;
   signupPressed = false;
@@ -114,6 +116,12 @@ function Pages(){
 
     
     if (signupPressed){
+      console.log(fname);
+      console.log(lname);
+      console.log(mail);
+      console.log(pass);
+      console.log(zipcode);
+      
       getUsers(fname,lname,mail,pass,zipcode);
       signupPressed = false;
     }
@@ -151,7 +159,14 @@ function Pages(){
     requestBook.style('display', 'inline-block');
     backButtonrb.style('display', 'inline-block');
     backButtonrb.position(screenW-100,10);
-    getUsers();
+    
+    if (ISBN_searched){
+      getBookFromISBN(isbn);
+      ISBN_searched = false;
+    }
+    
+    
+    
   }
 }
 
@@ -159,8 +174,30 @@ function Pages(){
 
 function getUsers(fname,lname,mail,pass,zip){
   var param = {firstname: fname,lastname:lname, email:mail, zipcode:zip, password: pass};
-  var path = 'http://148.84.200.116:4567/getUsers';
+  var path = 'http://148.84.200.116:4567/newUser';
   httpPost(path,param,displayUser);
+}
+
+function userLogin(user,pass){
+  var param = { email: user ,password:pass};
+  var path = 'http://148.84.200.116:4567/login';
+  httpPost(path,param,validateLogin);
+}
+
+function getBookatLocation(){
+  var param = {location: 12312213};
+  var path = 'http://148.84.200.116:4567/getBookAtLocation';
+  httpPost(path,param,bookAtLocation);
+}
+
+function getBookFromISBN(isbn){
+  var path = 'http://148.84.200.116:4567/generalBookInfo/' + isbn;
+  httpGet(path,'json',getBookInfo);  
+}
+
+function getBookInfo(data){
+  
+  console.log(data);
 }
 
 function displayUser(data){
@@ -175,10 +212,8 @@ function signUpButtonPressed(){
   signupPressed = true;
 }
 
-function userLogin(user,pass){
-  var param = { email: user ,password:pass};
-  var path = 'http://148.84.200.116:4567/login';
-  httpPost(path,param,validateLogin);
+function bookAtLocation(data){
+  console.log(data);
 }
 
 function validateLogin(data){
@@ -189,10 +224,8 @@ function parseJSON(val){
   console.log(val);
 }
 
-setTimeout(parseJSON, 5000);
-
 function searchBook(){
-  bookSearched = true;
+  ISBN_searched = true;
 }
 
 function submitBook(){
@@ -200,7 +233,6 @@ function submitBook(){
 }
 
 function hideElements(){
-  
   requestBook.style('display', 'none');
   accountdiv.style('display', 'none');
   homeScreen.style('display', 'none');
