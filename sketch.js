@@ -3,7 +3,7 @@ var screenH = window.innerHeight;   // Screen Height
 
 var theCanvas, pages;
 //html elements
-var signup, login, showMenus, homeScreen;
+var signup, login, showMenus, homeScreen, sharebook,backButton, accountdiv,backButtonAccount;
 
 function setup() {
   htmlElements();
@@ -12,8 +12,6 @@ function setup() {
 }
 
 function draw() {
-  background(90);
-  text('ShareBooks',20,20);
   
   if (pages.home){
     pages.displayMain();
@@ -23,13 +21,21 @@ function draw() {
     pages.displayAccount();
   }
   
+  else if (pages.submit_book)
+    pages.displaySubmitBook();
+  
 }
 
 function htmlElements(){
+  accountdiv = select('#account');
+  backButton = select('#backButton');
+  backButtonAccount = select('#backButtonac');
+  sharebook = select("#share_book");
   homeScreen = select("#perspective1");
   signup = select("#form");
-  signup.style('display', 'none');
   login = select("#login");
+  signup.style('display', 'none');
+  accountdiv.style('display', 'none');
   login.style('display', 'none');
   showMenu = select('#showMenu');
 }
@@ -43,9 +49,12 @@ function updateWidth(elem){
 
 function gotoPage(pg){
   
+  console.log(pg)
+
+  
   // Set all pages to false
-  pages.home = false; pages.signup = false; pages.request_book = false; 
-  pages.login = false; pages.submit_book = false; 
+  pages.home = false; pages.request_book = false; 
+  pages.account = false; pages.submit_book = false; 
   
   // Set the page to display to true
   if (pg == 1)
@@ -58,6 +67,8 @@ function gotoPage(pg){
     pages.request_book = true;
   else if (pg == 5)
     pages.submit_book = true;
+  
+  console.log(pages.account);
 }
 
 function Pages(){
@@ -70,39 +81,33 @@ function Pages(){
   
   this.displayMain = function(){
     
-    signup.style('display', 'inline-block');
+    background(255);
+    accountdiv.style('display', 'none');
+    sharebook.style('display', 'none');
+    homeScreen.style('display', 'inline-block');
     showMenu.position(screenW-100,10);
-    
   }
   
   this.displayHome = function(){
     
-    homeScreen.style('display', 'none');
-    
-    background("#262228");
-    fill("#FFCE00");
-    textSize(50);
-    textFont("Helvetica");
-    var phrase = "BookShare";
-    text(phrase,screenW/2-textWidth(phrase)/2,90);
-    fill("white");
-    textSize(20);
-    var phrase = "Something should go here";
-    text(phrase,screenW/2-textWidth(phrase)/2,130);
   }
   
   this.displayAccount = function(){
     
-    background(240);
+    homeScreen.style('display', 'none');
+    accountdiv.style('display', 'inline-block');
+    signup.position(screenW/2-this.signUpwid/2,150);
+    backButtonAccount.position(screenW-100,10);
+
+  }
+  
+  this.displaySubmitBook = function(){
     
-    textSize(50);
-    textFont("Helvetica");
-    var phrase = "Account Settings";
-    text(phrase,screenW/2-textWidth(phrase)/2,90);
+    accountdiv.style('display', 'none');
+    homeScreen.style('display', 'none');
+    sharebook.style('display', 'inline-block');
+    backButton.position(screenW-100,10);
     
-    // homeScreen.style('display', 'none');
-    signup.style('display', 'inline-block');
-    signup.position(screenW-100,10);
     
   }
   
